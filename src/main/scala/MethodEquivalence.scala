@@ -121,7 +121,7 @@ object MethodEquivalence {
   // 만약 이 제약을 scala에 넣는다면 우리는 에러를 볼수 있다.
 
   def holdOnNow[T <: AnyRef](t: T): T = MethodEquivalenceJava.holdOnNow(t)
-  def goshWhatIsThis2[T](t: T): T = holdOnNow(t)
+//  def goshWhatIsThis2[T](t: T): T = holdOnNow(t)   // 컴파일 안됨
   // Error:(124, 37) inferred type arguments [T] do not conform
   // to method holdOnNow's type parameter bounds [T <: AnyRef]
 

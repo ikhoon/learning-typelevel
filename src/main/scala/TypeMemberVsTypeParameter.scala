@@ -42,6 +42,8 @@ sealed abstract class MCons extends MList { self =>
 
 // 생성자 만들기, 함수를 통해 들어온 type parameter를 type member로 전달한다.
 object MList {
+  type Aux[T0] = MList { type T = T0 } // part 3에서 추가됨.
+
   def MNil[T0](): MNil {type T = T0} =
     new MNil {
       type T = T0
