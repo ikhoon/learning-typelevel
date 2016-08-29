@@ -138,17 +138,18 @@ object Existential {
 ## [When are two methods alike?](http://typelevel.org/blog/2015/07/16/method-equiv.html)
 Type member and parameters 시리즈 2
 ```scala
+// 원문 : http://typelevel.org/blog/2015/07/16/method-equiv.html
 // 지난 편에 이어 더 헷갈린다. existential 에 대해서 더 알아보는 시간이다. 
 // 우선 컴파일이 안되는 아래의 코드가 있다. 될것 같은데 안된다.
 def copyToZero(xs: ArrayBuffer[_]) : Unit = {
   xs += xs(0)   // 컴파일 안된다...
 }
-// Error:(8, 13) type mismatch;
-// found   : (some other)_$1(in value xs)
-// required: _$1(in value xs)
-// xs += xs(0)
+ Error:(8, 13) type mismatch;
+ found   : (some other)_$1(in value xs)
+ required: _$1(in value xs)
+ xs += xs(0)
 
-// 에러메시지가 당체 뭘 말하는지는 이해할수 어럅다. 모르겠다.
+// 에러메시지가 당체 뭘 말하는지는 이해할수 어렵다. 모르겠다.
 
 ```
 
@@ -159,11 +160,11 @@ public static void copyToZero(final List<?> xs) {
     xs.add(xs.get(0));  // 이것또한 컴파일이 안된다.
 }
 
-// Error:(8, 11) java: no suitable method found for add(capture#1 of ?)
-// method java.util.Collection.add(capture#2 of ?) is not applicable
-//         (argument mismatch; java.lang.Object cannot be converted to capture#2 of ?)
-// method java.util.List.add(capture#2 of ?) is not applicable
-//         (argument mismatch; java.lang.Object cannot be converted to capture#2 of ?)
+ Error:(8, 11) java: no suitable method found for add(capture#1 of ?)
+ method java.util.Collection.add(capture#2 of ?) is not applicable
+         (argument mismatch; java.lang.Object cannot be converted to capture#2 of ?)
+ method java.util.List.add(capture#2 of ?) is not applicable
+         (argument mismatch; java.lang.Object cannot be converted to capture#2 of ?)
 
 // 이 또한 에러가 무슨말을 하는지 잘 이해되지 않는다.
 // xs.get(0)한건 Object Type이고 java.util.List.add(? e) wildcard 타입이라 변형이 되지 않는다는 이야기 같다.
@@ -210,10 +211,10 @@ def copyToZeroWithLV(xs: ArrayBuffer[_]): Unit = {
 //    xs += zv   // 역시나 컴파일 되지 않는다.
 }
 
-// Error:(37, 11) type mismatch;
-// found   : zv.type (with underlying type Any)
-// required: _$3
-// xs += zv
+ Error:(37, 11) type mismatch;
+ found   : zv.type (with underlying type Any)
+ required: _$3
+ xs += zv
 
 // 변수에 대한 타입 추론이 전혀 도움이 되지 않는다.
 // scala는 xs를 existential type으로 됨으로 간주하고 zv와 xs의 관계를 끊음으로서
@@ -261,7 +262,7 @@ def mdropFirstEUsingP(xs: MList): MList = {
   mdropFirstT[xs.T](xs)
 }
 // 그런데 반대로는 되지 않는다.
-// `mdropFirstT` 는 <m `mdropFirstE` 혹은 mdropFirstT는 엄격히 더 일반적이다.
+// `mdropFirstT` 는 <m `mdropFirstE` 혹은 mdropFirstT는 엄격하고 더 일반적이다.
 
 
 // 아래 `mdropFirstE1`의 경우 type parameter 인자값 `T0`와 반환된는값 `Int`사이의 올바른 관계를 만드는것이 실패했다.
@@ -275,9 +276,9 @@ def mdropFirstE1[T0](xs: MList): MList = {
 // 중간에 뭐라뭐라 어려운 말 나옴... ㅡㅡ;; 다시한번 영어공부를 더 열심히 해야겠다 생각했다.
 
 def goshWhatIsThis[T](t: T): T = null  // 컴파일 되지 않음
-// Error:(105, 36) type mismatch;
-// found   : Null(null)
-// required: T
+ Error:(105, 36) type mismatch;
+ found   : Null(null)
+ required: T
 
 ```
 
@@ -303,12 +304,13 @@ def goshWhatIsThis1[T](t: T): T = MethodEquivalenceJava.holdOnNow(t)
 
 def holdOnNow[T <: AnyRef](t: T): T = MethodEquivalenceJava.holdOnNow(t)
 def goshWhatIsThis2[T](t: T): T = holdOnNow(t)
-// Error:(124, 37) inferred type arguments [T] do not conform
-// to method holdOnNow's type parameter bounds [T <: AnyRef]
+ Error:(124, 37) inferred type arguments [T] do not conform
+ to method holdOnNow's type parameter bounds [T <: AnyRef]
 
 // 아 어렵다... 나중에 다시 읽고 정리해봐야겠다.
+// 컴파일러 에러만 계속 보여주고...
 ```
-Sorry... 3부족이다. 영어, 함수형 언어, 스칼라 이해도 부족이다. 
+3부족이다. 영어, 함수형 언어, 스칼라 이해도 부족이다. :sob: 
 
 
 ## [What happens when I forget a refinement?](http://typelevel.org/blog/2015/07/19/forget-refinement-aux.html)
