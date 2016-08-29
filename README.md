@@ -136,6 +136,7 @@ object Existential {
 
 ## [When are two methods alike?](http://typelevel.org/blog/2015/07/16/method-equiv.html)
 ```scala
+// 원문 : http://typelevel.org/blog/2015/07/16/method-equiv.html
 // 지난 편에 이어 더 헷갈린다. existential 에 대해서 더 알아보는 시간이다. 
 // 우선 컴파일이 안되는 아래의 코드가 있다. 될것 같은데 안된다.
 def copyToZero(xs: ArrayBuffer[_]) : Unit = {
