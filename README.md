@@ -376,7 +376,7 @@ Error:(51, 36) illegal cyclic reference involving type T
 // type를 member와 같이 정의 할때 member를 type parameter로 바꾸기 위한 `Aux` type을 companion에 정의 해야한다.
 
 // `Aux`의 이름은 shapeless의 conversion에서 빌려왔다.
-
+// https://github.com/milessabin/shapeless/blob/shapeless-2.2.4/core/src/main/scala/shapeless/ops/hlists.scala#L1501
 // `object MList` 이것들을 추가해보자.
 object MList {
   type Aux[T0] = MList { type T = T0 }
