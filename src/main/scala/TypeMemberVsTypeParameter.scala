@@ -44,7 +44,7 @@ sealed abstract class MCons extends MList { self =>
 object MList {
   type Aux[T0] = MList { type T = T0 } // part 3에서 추가됨.
 
-  def MNil[T0](): MNil {type T = T0} =
+  def MNil[T0](): MNil { type T = T0 } =
     new MNil {
       type T = T0
     }
@@ -106,6 +106,12 @@ object MList2 {
 
 object Existential {
   // type member existential version
+  def mlength(xs: MList): Int =
+    xs.uncons match {
+      case None => 0
+      case Some(c) => 1 + mlength(c.tail)
+    }
+
   def mlength(xs: MList2): Int =
     xs.uncons match {
       case None => 0
